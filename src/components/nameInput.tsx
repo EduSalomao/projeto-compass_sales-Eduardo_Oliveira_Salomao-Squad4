@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 import { globalstyle } from "../../assets/styles/globalstyles";
 
-export function EmailInput() {
-  const [email, setEmail] = useState("");
+export function NameInput() {
+  const [name, setName] = useState("");
 
-  const handleInputEmail = (newEmail: string) => {
-    setEmail(newEmail);
+  const handleInputName = (newName: string) => {
+    setName(newName);
   };
 
   return (
     <View style={globalstyle.inputview}>
       <TextInput
-        placeholder="email"
-        value={email}
-        onChangeText={handleInputEmail}
+        placeholder="name"
+        value={name}
+        onChangeText={handleInputName}
         style={globalstyle.input}
       />
     </View>

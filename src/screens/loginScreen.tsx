@@ -1,29 +1,16 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { View } from "react-native";
+import { globalstyle } from "../../assets/styles/globalstyles";
 
-type RootStackParamList = {
-  Login: undefined;
-  SingUp: undefined;
-  Forgot: undefined;
-};
+import { EmailInput } from "../components/emailInput";
+import { PassInput } from "../components/passInput";
 
-type HomeScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, "Login">;
-};
-
-export const LoginScreen = ({ navigation }: HomeScreenProps) => {
+export const LoginScreen = () => {
   return (
-    <View>
-      <Text>Login</Text>
-      <View>
-        <Button title="Sing Up" onPress={() => navigation.navigate("SingUp")} />
-      </View>
-      <View>
-        <Button
-          title="I forgot my password!"
-          onPress={() => navigation.navigate("Forgot")}
-        />
+    <View style={globalstyle.page}>
+      <View style={globalstyle.inputContainer}>
+        <EmailInput />
+        <PassInput />
       </View>
     </View>
   );
