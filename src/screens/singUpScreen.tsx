@@ -10,7 +10,7 @@ import { NameInput } from "../components/nameInput";
 export const SingUpScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <View style={globalstyle.page}>
-      <Text>Sing Up</Text>
+      <Text style={globalstyle.titlepage}>Sing Up</Text>
       <View style={globalstyle.inputContainer}>
         <NameInput />
         <EmailInput />

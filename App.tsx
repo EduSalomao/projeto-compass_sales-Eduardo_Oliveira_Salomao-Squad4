@@ -11,9 +11,21 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="SingUp" component={SingUpScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Forgot" component={ForgotPassScreen} />
+        <Stack.Screen
+          name="SingUp"
+          component={SingUpScreen}
+          options={{ title: "" }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ title: "" }}
+        />
+        <Stack.Screen
+          name="Forgot"
+          component={ForgotPassScreen}
+          options={{ title: "" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
