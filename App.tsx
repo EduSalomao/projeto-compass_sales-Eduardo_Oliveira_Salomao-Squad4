@@ -1,5 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import { StatusBar } from "expo-status-bar";
 
 import { LoginScreen } from "./src/screens/loginScreen";
 import { SingUpScreen } from "./src/screens/singUpScreen";
@@ -10,7 +12,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="SingUp">
         <Stack.Screen
           name="SingUp"
           component={SingUpScreen}
@@ -27,6 +29,7 @@ export default function App() {
           options={{ title: "" }}
         />
       </Stack.Navigator>
+      <StatusBar style="auto" />
     </NavigationContainer>
   );
 }

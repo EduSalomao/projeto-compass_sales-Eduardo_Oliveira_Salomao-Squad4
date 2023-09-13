@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
-import { globalstyle } from "../../assets/styles/globalstyles";
+import { globalstyle } from "../../../assets/styles/globalstyles";
 
 export function PassInput() {
   const [password, setPassword] = useState("");

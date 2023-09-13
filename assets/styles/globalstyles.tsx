@@ -24,8 +24,11 @@ export const globalstyle = StyleSheet.create({
   titlepage: {
     fontSize: 34,
     fontWeight: "bold",
-    paddingTop: 20,
-    paddingBottom: 40,
+    paddingTop: 30,
+    paddingBottom: 60,
     paddingLeft: 20,
+  },
+  statusbar: {
+    backgroundColor: "#F9F9F9",
   },
 });

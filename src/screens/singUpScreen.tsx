@@ -1,13 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
-import { HomeScreenProps } from "../routes/navigation";
+import { View, Text } from "react-native";
+
+import { NavigationProps } from "../routes/navigation";
 import { globalstyle } from "../../assets/styles/globalstyles";
+import { EmailInput } from "../components/Inputs/emailInput";
+import { PassInput } from "../components/Inputs/passInput";
+import { NameInput } from "../components/Inputs/nameInput";
+import { InsertButton } from "../components/Buttons/insertButton";
+import { NavigateButton } from "../components/Buttons/navigateButton";
 
-import { EmailInput } from "../components/emailInput";
-import { PassInput } from "../components/passInput";
-import { NameInput } from "../components/nameInput";
-
-export const SingUpScreen = ({ navigation }: HomeScreenProps) => {
+export const SingUpScreen = ({ navigation }: NavigationProps) => {
   return (
     <View style={globalstyle.page}>
       <Text style={globalstyle.titlepage}>Sing Up</Text>
@@ -16,19 +18,14 @@ export const SingUpScreen = ({ navigation }: HomeScreenProps) => {
         <EmailInput />
         <PassInput />
       </View>
+      <NavigateButton
+        navigation={navigation}
+        text="Already have an account?"
+        pageDestination="Login"
+      />
       <View>
-        <Button title="Login" onPress={() => navigation.navigate("Login")} />
-      </View>
-      <View>
-        <View>
-          <Button
-            title="I forgot my password!"
-            onPress={() => navigation.navigate("Forgot")}
-          />
-        </View>
+        <InsertButton buttonTitle="SING UP" />
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({});

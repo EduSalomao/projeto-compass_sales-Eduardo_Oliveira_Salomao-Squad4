@@ -1,11 +1,11 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Login: undefined;
   SingUp: undefined;
   Forgot: undefined;
 };
 
-export type HomeScreenProps = {
-  navigation: StackNavigationProp<RootStackParamList, "Login">;
+export type NavigationProps = {
+  navigation: StackNavigationProp<RootStackParamList, "SingUp">;
 };
