@@ -1,22 +1,41 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, TextInput, Text } from "react-native";
 import { globalstyle } from "../../../assets/styles/globalstyles";
+import { DataContext } from "../../contexts/auth";
+import { isValidName } from "../../validations/inputsValidations";
 
 export function NameInput() {
-  const [name, setName] = useState("");
+  const { user, setUser }: any = useContext(DataContext);
+  const [isNameValid, setIsNameValid] = useState(true);
+  const [showLabel, setShowLabel] = useState(false);
 
-  const handleInputName = (newName: string) => {
-    setName(newName);
+  const handleInputName = (value: string) => {
+    setUser({ ...user, name: value });
+    setIsNameValid(isValidName(value));
+
+    if (value.trim() !== "") {
+      setShowLabel(true);
+    } else {
+      setShowLabel(false);
+    }
   };
 
   return (
-    <View style={globalstyle.inputview}>
-      <TextInput
-        placeholder="name"
-        value={name}
-        onChangeText={handleInputName}
-        style={globalstyle.input}
-      />
+    <View>
+      {showLabel && <Text style={globalstyle.label}>Name</Text>}
+      <View style={globalstyle.inputview}>
+        <TextInput
+          placeholder="Name"
+          value={user.name}
+          onChangeText={handleInputName}
+          style={[globalstyle.input, !isNameValid && globalstyle.invalidInput]}
+        />
+      </View>
+      {!isNameValid && (
+        <Text style={globalstyle.errorText}>
+          Invalid name! Your name must contain more than 4 characters
+        </Text>
+      )}
     </View>
   );
 }

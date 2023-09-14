@@ -1,18 +1,19 @@
 import { StyleSheet } from "react-native";
+import { loadFonts } from "../../src/utils/fontLoader";
 
 export const globalstyle = StyleSheet.create({
   input: {
     height: 64,
     width: "90%",
-    paddingBottom: 1,
     paddingLeft: 15,
-    paddingRight: 15,
     backgroundColor: "#FFFFFF",
     elevation: 1,
+    borderRadius: 5,
+    fontFamily: "Roboto-Medium",
   },
   inputview: {
     alignItems: "center",
-    paddingBottom: 15,
+    paddingTop: 20,
   },
   inputContainer: {
     padding: 10,
@@ -24,11 +25,41 @@ export const globalstyle = StyleSheet.create({
   titlepage: {
     fontSize: 34,
     fontWeight: "bold",
+    color: "#222222",
     paddingTop: 30,
     paddingBottom: 60,
-    paddingLeft: 20,
+    marginLeft: 25,
+    fontFamily: "Roboto-Bold",
   },
   statusbar: {
     backgroundColor: "#F9F9F9",
+  },
+  standardText: {
+    fontSize: 14,
+    color: "#222222",
+    fontFamily: "Roboto-Medium",
+  },
+  invalidInput: {
+    borderColor: "red",
+    borderWidth: 1,
+    fontFamily: "Roboto-Regular",
+  },
+  errorText: {
+    color: "#F01F0E",
+    paddingTop: 0,
+    paddingLeft: "10%",
+    bottom: -15,
+    position: "absolute",
+    fontSize: 11,
+    fontFamily: "Roboto-Regular",
+  },
+  label: {
+    position: "absolute",
+    color: "#9B9B9B",
+    bottom: "52%",
+    left: "8%",
+    zIndex: 2,
+    fontSize: 11,
+    fontFamily: "Roboto-Regular",
   },
 });
