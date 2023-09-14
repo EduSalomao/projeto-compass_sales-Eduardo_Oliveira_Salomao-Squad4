@@ -7,14 +7,14 @@ import { EmailInput } from "../components/Inputs/emailInput";
 import { PassInput } from "../components/Inputs/passInput";
 import { InsertButton } from "../components/Buttons/insertButton";
 import { NavigateButton } from "../components/Buttons/navigateButton";
+import { AuthContent } from "../auth/authContent";
 
 export const LoginScreen = ({ navigation }: NavigationProps) => {
   return (
     <View style={globalstyle.page}>
       <Text style={globalstyle.titlepage}>Login</Text>
       <View style={globalstyle.inputContainer}>
-        <EmailInput />
-        <PassInput />
+        <AuthContent />
         <NavigateButton
           navigation={navigation}
           text="Forgot your password?"

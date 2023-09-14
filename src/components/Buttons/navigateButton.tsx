@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { NavigationProps, RootStackParamList } from "../../routes/navigation";
+import { globalstyle } from "../../../assets/styles/globalstyles";
+import { DataContext } from "../../contexts/auth";
 
 export const NavigateButton = ({
   navigation,
@@ -10,9 +13,18 @@ export const NavigateButton = ({
   text: string;
   pageDestination: keyof RootStackParamList;
 }) => {
+  const { user, setUser }: any = useContext(DataContext);
+
   const handleButtonPress = () => {
     navigation.navigate(pageDestination);
+    setUser({ ...user, email: "", name: "", password: "" });
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setUser({ ...user, email: "", name: "", password: "" });
+    }, [navigation])
+  );
 
   return (
     <View>
@@ -21,7 +33,7 @@ export const NavigateButton = ({
           source={require("../../../assets/icons/round-arrow_right_alt-24px.png")}
           style={{ width: 24, height: 24, marginRight: 8 }}
         />
-        <Text>{text}</Text>
+        <Text style={globalstyle.standardText}>{text}</Text>
       </TouchableOpacity>
     </View>
   );
