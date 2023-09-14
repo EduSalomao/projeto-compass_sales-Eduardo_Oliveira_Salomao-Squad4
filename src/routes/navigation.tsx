@@ -4,6 +4,7 @@ export type RootStackParamList = {
   Login: undefined;
   SingUp: undefined;
   Forgot: undefined;
+  Main: undefined;
 };
 
 export type NavigationProps = {

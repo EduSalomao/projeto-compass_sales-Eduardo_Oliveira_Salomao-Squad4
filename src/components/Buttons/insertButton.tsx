@@ -6,20 +6,9 @@ import { isValidEmail } from "../../validations/inputsValidations";
 export const InsertButton = (props: any) => {
   const { user }: any = useContext(DataContext);
 
-  const handleInsert = () => {
-    console.log("Nome:", user.name);
-    console.log("Email:", user.email);
-    console.log("Senha:", user.password);
-    if (isValidEmail(user.email)) {
-      console.log("email valido!");
-    } else {
-      console.log("email invalido!");
-    }
-  };
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={handleInsert}>
+      <TouchableOpacity style={styles.button} onPress={props.onPress}>
         <Text style={styles.buttontext}>{props.buttonTitle}</Text>
       </TouchableOpacity>
     </View>
