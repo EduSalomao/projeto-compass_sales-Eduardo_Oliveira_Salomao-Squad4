@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { loadFonts } from "../../src/utils/fontLoader";
 
 export const globalstyle = StyleSheet.create({
   input: {
