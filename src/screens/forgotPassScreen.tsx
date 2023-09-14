@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 import { globalstyle } from "../../assets/styles/globalstyles";
@@ -14,6 +14,7 @@ export const ForgotPassScreen = () => {
         new password via email.
       </Text>
       <ForgetContent />
+      <View style={styles.separator}></View>
       <InsertButton buttonTitle="SEND" />
     </View>
   );
@@ -23,5 +24,8 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 25,
     paddingBottom: 20,
+  },
+  separator: {
+    paddingTop: 50,
   },
 });

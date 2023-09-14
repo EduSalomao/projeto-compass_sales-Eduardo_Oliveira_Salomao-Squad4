@@ -15,10 +15,17 @@ export function PassInput() {
   const [showPassword, setShowPassword] = useState(false);
   const { user, setUser }: any = useContext(DataContext);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [showLabel, setShowLabel] = useState(false);
 
   const handleInputPassword = (value: string) => {
     setUser({ ...user, password: value });
     setIsPasswordValid(isValidPassword(value));
+
+    if (value.trim() !== "") {
+      setShowLabel(true);
+    } else {
+      setShowLabel(false);
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -27,6 +34,7 @@ export function PassInput() {
 
   return (
     <View>
+      {showLabel && <Text style={globalstyle.label}>Password</Text>}
       <View style={globalstyle.inputview}>
         <TextInput
           placeholder="Password"
@@ -50,7 +58,9 @@ export function PassInput() {
         </TouchableOpacity>
       </View>
       {!isPasswordValid && (
-        <Text style={globalstyle.errorText}>Invalid password!</Text>
+        <Text style={globalstyle.errorText}>
+          Invalid password. Your password must contain at least 6 characters
+        </Text>
       )}
     </View>
   );
