@@ -8,18 +8,18 @@ import { NavigateButton } from "../components/Buttons/navigateButton";
 import { AuthContent } from "../auth/authContent";
 import { DataContext } from "../contexts/auth";
 import { Login } from "../utils/auth";
-import {
-  isValidEmail,
-  isValidPassword,
-} from "../validations/inputsValidations";
+import { isInputsValidation } from "../validations/inputsValidations";
+import { isLogged } from "../validations/authenticateValidations";
 
 export const LoginScreen = ({ navigation }: NavigationProps) => {
   const { user }: any = useContext(DataContext);
 
   async function loginHandler() {
-    if (isValidEmail(user.email) && isValidPassword(user.password)) {
+    if (isInputsValidation("login", user)) {
       await Login(user.email, user.password);
-      console.log("DEU CERTO DISGRAÇA");
+      navigation.navigate("Main");
+    } else {
+      console.log("dados invalidos");
     }
   }
   return (

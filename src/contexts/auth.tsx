@@ -1,10 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-
-interface User {
-  name: string;
-  email: string;
-  password: string;
-}
+import { User } from "../interfaces/user";
 
 export const DataContext = createContext<{
   user: User;
@@ -27,3 +22,4 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     </DataContext.Provider>
   );
 }
+3;

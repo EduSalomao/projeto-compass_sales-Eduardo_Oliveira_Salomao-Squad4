@@ -8,23 +8,17 @@ import { NavigateButton } from "../components/Buttons/navigateButton";
 import { RegisterContent } from "../auth/resgisterContent";
 import { DataContext } from "../contexts/auth";
 import { CreateUser } from "../utils/auth";
-import {
-  isValidEmail,
-  isValidName,
-  isValidPassword,
-} from "../validations/inputsValidations";
+import { isInputsValidation } from "../validations/inputsValidations";
 
 export const SingUpScreen = ({ navigation }: NavigationProps) => {
-  const { user }: any = useContext(DataContext);
+  const { user } = useContext(DataContext);
 
   async function singUpHandler() {
-    if (
-      isValidEmail(user.email) &&
-      isValidName(user.name) &&
-      isValidPassword(user.password)
-    ) {
+    if (isInputsValidation("singup", user)) {
       await CreateUser(user.email, user.password);
-      console.log("DEU CERTO DISGRAÇA");
+      navigation.navigate("Main");
+    } else {
+      console.log("erro");
     }
   }
 
