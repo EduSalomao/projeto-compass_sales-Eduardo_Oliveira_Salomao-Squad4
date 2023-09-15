@@ -9,7 +9,6 @@ import { AuthContent } from "../auth/authContent";
 import { DataContext } from "../contexts/auth";
 import { Login } from "../utils/auth";
 import { isInputsValidation } from "../validations/inputsValidations";
-import { isLogged } from "../validations/authenticateValidations";
 
 export const LoginScreen = ({ navigation }: NavigationProps) => {
   const { user }: any = useContext(DataContext);
