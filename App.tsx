@@ -9,6 +9,7 @@ import { LoginScreen } from "./src/screens/loginScreen";
 import { SingUpScreen } from "./src/screens/singUpScreen";
 import { ForgotPassScreen } from "./src/screens/forgotPassScreen";
 import { MainScreen } from "./src/screens/mainScreen";
+import { app } from "./src/services/firebaseconfig";
 
 const Stack = createStackNavigator();
 

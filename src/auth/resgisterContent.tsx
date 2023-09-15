@@ -5,8 +5,6 @@ import { PassInput } from "../components/Inputs/passInput";
 import { NameInput } from "../components/Inputs/nameInput";
 
 export const RegisterContent = () => {
-  function RegisterValidation() {}
-
   return (
     <View>
       <NameInput />

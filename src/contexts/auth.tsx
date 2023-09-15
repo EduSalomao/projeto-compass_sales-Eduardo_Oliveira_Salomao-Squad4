@@ -1,20 +1,27 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  ReactNode,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { User } from "../interfaces/user";
 
-interface User {
-  name: string;
-  email: string;
-  password: string;
+interface DataContextProps {
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
 }
 
-export const DataContext = createContext<{
-  user: User;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
-}>({
+export const DataContext = createContext<DataContextProps>({
   user: { name: "", email: "", password: "" },
   setUser: () => {},
 });
 
-export function DataProvider({ children }: { children: React.ReactNode }) {
+interface DataProviderProps {
+  children: ReactNode;
+}
+
+export function DataProvider({ children }: DataProviderProps) {
   const [user, setUser] = useState<User>({
     name: "",
     email: "",
