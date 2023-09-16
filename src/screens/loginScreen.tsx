@@ -1,16 +1,21 @@
 import React, { useContext } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../routes/navigation";
 
-import { NavigationProps } from "../routes/navigation";
 import { globalstyle } from "../../assets/styles/globalstyles";
 import { InsertButton } from "../components/Buttons/insertButton";
 import { NavigateButton } from "../components/Buttons/navigateButton";
 import { AuthContent } from "../auth/authContent";
-import { DataContext } from "../contexts/auth";
+import { DataContext } from "../contexts/inputsData";
 import { Login } from "../utils/auth";
 import { isInputsValidation } from "../validations/inputsValidations";
 
-export const LoginScreen = ({ navigation }: NavigationProps) => {
+type LoginScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, "Login">;
+};
+
+export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const { user }: any = useContext(DataContext);
 
   async function loginHandler() {
@@ -18,9 +23,14 @@ export const LoginScreen = ({ navigation }: NavigationProps) => {
       await Login(user.email, user.password);
       navigation.navigate("Main");
     } else {
-      console.log("dados invalidos");
+      console.log("dados inválidos");
     }
   }
+
+  function goToSingUp() {
+    navigation.navigate("SignUp");
+  }
+
   return (
     <View style={globalstyle.page}>
       <Text style={globalstyle.titlepage}>Login</Text>
@@ -32,7 +42,20 @@ export const LoginScreen = ({ navigation }: NavigationProps) => {
           pageDestination="Forgot"
         />
         <InsertButton buttonTitle="LOGIN" onPress={loginHandler} />
+        <View style={style.container}>
+          <Text>OR</Text>
+        </View>
+        <InsertButton buttonTitle="CREATE NEW ACCOUNT" onPress={goToSingUp} />
       </View>
     </View>
   );
 };
+
+const style = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+});

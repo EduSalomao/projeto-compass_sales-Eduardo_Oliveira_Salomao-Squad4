@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DataContext } from "../contexts/auth";
+import { DataContext } from "../contexts/inputsData";
 
 export function ResetInputFields() {
   const { user, setUser }: any = useContext(DataContext);

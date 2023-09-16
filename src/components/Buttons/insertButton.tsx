@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import { DataContext } from "../../contexts/auth";
 
 export const InsertButton = (props: any) => {
   return (

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { View, TextInput, Text } from "react-native";
 import { globalstyle } from "../../../assets/styles/globalstyles";
-import { DataContext } from "../../contexts/auth";
+import { DataContext } from "../../contexts/inputsData";
 import { isValidEmail } from "../../validations/inputsValidations";
 
 export function EmailInput() {

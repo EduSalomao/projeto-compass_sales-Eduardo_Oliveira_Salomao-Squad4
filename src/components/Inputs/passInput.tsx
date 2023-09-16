@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { globalstyle } from "../../../assets/styles/globalstyles";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { DataContext } from "../../contexts/auth";
+import { DataContext } from "../../contexts/inputsData";
 import { isValidPassword } from "../../validations/inputsValidations";
 
 export function PassInput() {
@@ -69,7 +69,7 @@ export function PassInput() {
 const styles = StyleSheet.create({
   icon: {
     position: "absolute",
-    top: "55%",
+    top: "63%",
     right: "10%",
   },
 });
