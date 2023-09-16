@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { StyleSheet, View, TouchableOpacity, Text, Image } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
-import { NavigationProps, RootStackParamList } from "../../routes/navigation";
+import { RootStackParamList } from "../../routes/navigation";
 import { globalstyle } from "../../../assets/styles/globalstyles";
-import { DataContext } from "../../contexts/auth";
+import { DataContext } from "../../contexts/inputsData";
 
 export const NavigateButton = ({
   navigation,
   text,
   pageDestination,
-}: NavigationProps & {
+}: any & {
   text: string;
   pageDestination: keyof RootStackParamList;
 }) => {

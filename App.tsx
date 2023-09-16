@@ -2,68 +2,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { DataProvider } from "./src/contexts/auth";
+import { DataProvider } from "./src/contexts/inputsData";
 import FontLoader from "./src/utils/fontLoader";
-
-import { LoginScreen } from "./src/screens/loginScreen";
-import { SingUpScreen } from "./src/screens/singUpScreen";
-import { ForgotPassScreen } from "./src/screens/forgotPassScreen";
-import { MainScreen } from "./src/screens/mainScreen";
-import { app } from "./src/services/firebaseconfig";
-
-const Stack = createStackNavigator();
+import { AppNavigator } from "./src/routes/navigation";
 
 export default function App() {
   return (
     <NavigationContainer>
       <DataProvider>
         <FontLoader>
-          <Stack.Navigator initialRouteName="SingUp">
-            <Stack.Screen
-              name="SingUp"
-              component={SingUpScreen}
-              options={{
-                title: "",
-                headerStyle: {
-                  backgroundColor: "#F9F9F9",
-                  elevation: 0,
-                },
-              }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{
-                title: "",
-                headerStyle: {
-                  backgroundColor: "#F9F9F9",
-                  elevation: 0,
-                },
-              }}
-            />
-            <Stack.Screen
-              name="Forgot"
-              component={ForgotPassScreen}
-              options={{
-                title: "",
-                headerStyle: {
-                  backgroundColor: "#F9F9F9",
-                  elevation: 0,
-                },
-              }}
-            />
-            <Stack.Screen
-              name="Main"
-              component={MainScreen}
-              options={{
-                title: "",
-                headerStyle: {
-                  backgroundColor: "#F9F9F9",
-                  elevation: 0,
-                },
-              }}
-            />
-          </Stack.Navigator>
+          <AppNavigator />
         </FontLoader>
       </DataProvider>
       <StatusBar backgroundColor="#F9F9F9" />

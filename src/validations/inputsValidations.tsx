@@ -4,22 +4,29 @@ export function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (email !== "") {
     return emailRegex.test(email);
+  } else {
+    return false;
   }
-  return true;
 }
 
 export function isValidPassword(password: string): boolean {
-  if (password !== "") {
-    return password.length >= 6;
+  const passwordRegex = /^[A-Za-z\d@$!%*?&]{6,}$/;
+
+  if (password !== "" && passwordRegex.test(password)) {
+    return true;
+  } else {
+    return false;
   }
-  return true;
 }
 
 export function isValidName(name: string): boolean {
-  if (name !== "") {
-    name.length >= 4;
+  const nameRegex = /^[A-Za-z0-9\s\-']+$/;
+
+  if (name !== "" && nameRegex.test(name)) {
+    return name.length >= 4;
+  } else {
+    return false;
   }
-  return true;
 }
 
 export function isInputsValidation(

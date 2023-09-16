@@ -6,9 +6,9 @@ import { InsertButton } from "../components/Buttons/insertButton";
 import { ForgetContent } from "../auth/forgetContent";
 import { RecoveryPassword } from "../utils/auth";
 import { isInputsValidation } from "../validations/inputsValidations";
-import { DataContext } from "../contexts/auth";
+import { DataContext } from "../contexts/inputsData";
 
-export const ForgotPassScreen = () => {
+export const ForgotPasswordScreen = () => {
   const { user } = useContext(DataContext);
 
   async function recoveryHandler() {

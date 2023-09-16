@@ -1,46 +1,52 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app } from "../services/firebaseconfig";
-import { getDatabase, ref, get } from "firebase/database";
+import { View, Text, Button, StyleSheet } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../routes/navigation";
+import { isAuthenticated, logoutUser } from "../utils/authServices";
+import { GetUserData } from "../utils/asyncStorage";
 
-export const MainScreen = () => {
-  const [username, setUsername] = useState("");
+type MainScreenProps = {
+  navigation: StackNavigationProp<RootStackParamList, "Main">;
+};
+
+export const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
+  const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchUsername(userId: any) {
-      try {
-        const database = getDatabase(app);
-        const userRef = ref(database, `usuarios/${userId}/nome_de_usuario`);
+    checkAuthentication();
+  }, [[navigation]]);
 
-        const snapshot = await get(userRef);
-
-        if (snapshot.exists()) {
-          const userUsername = snapshot.val();
-          setUsername(userUsername);
-        } else {
-          console.log("Nome de usuário não encontrado no banco de dados.");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar nome de usuário:", error);
-      }
+  const checkAuthentication = async () => {
+    const authenticated = await isAuthenticated();
+    if (!authenticated) {
+      navigation.navigate("Login");
+      return;
     }
 
-    const auth = getAuth(app);
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userId = user.uid;
+    const name = await GetUserData("user_name");
+    if (name) {
+      setUserName(name);
+    } else {
+    }
+  };
 
-        fetchUsername(userId);
-      } else {
-        console.log("Usuário não autenticado.");
-      }
-    });
-  }, []);
+  const handleLogout = async () => {
+    await logoutUser();
+    navigation.navigate("Login");
+  };
 
   return (
-    <View>
-      <Text>Bem vindo, {username}!</Text>
+    <View style={styles.container}>
+      <Text>Welcome, {userName || "Undefined"}!</Text>
+      <Button title="Logout" onPress={handleLogout} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
