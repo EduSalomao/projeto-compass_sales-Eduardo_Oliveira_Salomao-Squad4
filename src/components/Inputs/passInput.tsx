@@ -53,7 +53,7 @@ export function PassInput() {
           <Ionicons
             name={showPassword ? "eye" : "eye-off"}
             size={20}
-            color="#222222"
+            color="gray"
           />
         </TouchableOpacity>
       </View>

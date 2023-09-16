@@ -19,26 +19,17 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const { user }: any = useContext(DataContext);
 
   async function loginHandler() {
-    console.log("Tentando fazer login...");
-
     if (isInputsValidation("login", user)) {
-      console.log("Validação de entrada bem-sucedida.");
       try {
         await Login(user.email, user.password);
-        console.log("Login bem-sucedido");
 
         navigation.navigate("Main");
       } catch (error) {
         console.error("Erro ao fazer login:", error);
-        console.log("Dados inválidos");
       }
     } else {
       console.log("Dados inválidos");
     }
-  }
-
-  function goToSingUp() {
-    navigation.navigate("SignUp");
   }
 
   return (
@@ -52,10 +43,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
           pageDestination="Forgot"
         />
         <InsertButton buttonTitle="LOGIN" onPress={loginHandler} />
-        <View style={style.container}>
-          <Text>OR</Text>
+        <View style={style.container}></View>
+        <View style={style.navigateView}>
+          <NavigateButton
+            navigation={navigation}
+            text="Don't have account? Register"
+            pageDestination="SignUp"
+          />
         </View>
-        <InsertButton buttonTitle="CREATE NEW ACCOUNT" onPress={goToSingUp} />
       </View>
     </View>
   );
@@ -67,5 +62,9 @@ const style = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 20,
     paddingBottom: 20,
+  },
+  navigateView: {
+    alignItems: "center",
+    paddingLeft: 20,
   },
 });

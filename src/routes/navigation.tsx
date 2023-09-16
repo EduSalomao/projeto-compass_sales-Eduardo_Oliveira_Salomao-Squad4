@@ -5,8 +5,10 @@ import { LoginScreen } from "../screens/loginScreen";
 import { SignUpScreen } from "../screens/singUpScreen";
 import { ForgotPasswordScreen } from "../screens/forgotPassScreen";
 import { isAuthenticated } from "../utils/authServices";
+import { SplashScreen } from "../screens/splashScreen";
 
 export type RootStackParamList = {
+  Splash: undefined;
   Main: undefined;
   Login: undefined;
   SignUp: undefined;
@@ -17,38 +19,66 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isCheckingAuthentication, setIsCheckingAuthentication] =
+    useState(true);
 
-  // Verifique se o usuário está autenticado
   useEffect(() => {
     async function checkAuthentication() {
       const authenticated = await isAuthenticated();
       setIsLoggedIn(authenticated);
+      setIsCheckingAuthentication(false);
     }
 
-    checkAuthentication();
+    setTimeout(() => {
+      checkAuthentication();
+    }, 2000);
   }, []);
+
+  if (isCheckingAuthentication) {
+    return <SplashScreen />;
+  }
 
   return (
     <Stack.Navigator initialRouteName={isLoggedIn ? "Main" : "Login"}>
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: "",
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: "#F9F9F9",
+          },
+        }}
       />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: "",
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: "#F9F9F9",
+          },
+        }}
       />
       <Stack.Screen
         name="Forgot"
         component={ForgotPasswordScreen}
-        options={{ headerShown: false }}
+        options={{
+          title: "",
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: "#F9F9F9",
+          },
+        }}
       />
       <Stack.Screen
         name="Main"
         component={MainScreen}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack.Navigator>
   );

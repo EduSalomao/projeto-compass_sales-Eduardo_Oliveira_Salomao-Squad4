@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { View, Text } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native"; // Importe useNavigation
 import { RootStackParamList } from "../routes/navigation";
 import { globalstyle } from "../../assets/styles/globalstyles";
 import { InsertButton } from "../components/Buttons/insertButton";

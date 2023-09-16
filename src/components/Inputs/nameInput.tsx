@@ -8,7 +8,6 @@ export function NameInput() {
   const { user, setUser }: any = useContext(DataContext);
   const [isNameValid, setIsNameValid] = useState(true);
 
-  // Verifica se o campo de nome não está vazio para mostrar o rótulo
   const showLabel = user.name.trim() !== "";
 
   const handleInputName = (value: string) => {
