@@ -19,11 +19,21 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const { user }: any = useContext(DataContext);
 
   async function loginHandler() {
+    console.log("Tentando fazer login...");
+
     if (isInputsValidation("login", user)) {
-      await Login(user.email, user.password);
-      navigation.navigate("Main");
+      console.log("Validação de entrada bem-sucedida.");
+      try {
+        await Login(user.email, user.password);
+        console.log("Login bem-sucedido");
+
+        navigation.navigate("Main");
+      } catch (error) {
+        console.error("Erro ao fazer login:", error);
+        console.log("Dados inválidos");
+      }
     } else {
-      console.log("dados inválidos");
+      console.log("Dados inválidos");
     }
   }
 

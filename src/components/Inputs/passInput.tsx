@@ -20,30 +20,30 @@ export function PassInput() {
   const handleInputPassword = (value: string) => {
     setUser({ ...user, password: value });
     setIsPasswordValid(isValidPassword(value));
-
-    if (value.trim() !== "") {
-      setShowLabel(true);
-    } else {
-      setShowLabel(false);
-    }
+    setShowLabel(value.trim() !== "");
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleBlur = () => {
+    setIsPasswordValid(isValidPassword(user.password));
+  };
+
   return (
     <View>
       {showLabel && <Text style={globalstyle.label}>Password</Text>}
-      <View style={globalstyle.inputview}>
+      <View style={[globalstyle.inputview]}>
         <TextInput
           placeholder="Password"
           value={user.password}
           onChangeText={handleInputPassword}
+          onBlur={handleBlur}
           secureTextEntry={!showPassword}
           style={[
             globalstyle.input,
-            !isPasswordValid && globalstyle.invalidInput,
+            !isPasswordValid && showLabel && globalstyle.invalidInput,
           ]}
         />
         <TouchableOpacity
@@ -57,7 +57,7 @@ export function PassInput() {
           />
         </TouchableOpacity>
       </View>
-      {!isPasswordValid && (
+      {!isPasswordValid && showLabel && (
         <Text style={globalstyle.errorText}>
           Invalid password. Your password must contain at least 6 characters
         </Text>

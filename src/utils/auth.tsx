@@ -46,7 +46,6 @@ export async function CreateUser(
     const userData = {
       user_email: email,
       user_name: name,
-      session_key: sessionKey,
     };
 
     await SaveData("sessionKey", sessionKey);
@@ -75,7 +74,6 @@ export async function Login(email: any, password: any) {
       if (userSnapshot.exists()) {
         await SaveData("sessionKey", sessionKey);
         await SaveData("userData", userSnapshot.val());
-        console.log("Login bem-sucedido");
       } else {
         console.log("Usuário não encontrado no Realtime Database");
       }

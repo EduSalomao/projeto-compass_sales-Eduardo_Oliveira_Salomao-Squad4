@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MainScreen } from "../screens/mainScreen";
 import { LoginScreen } from "../screens/loginScreen";
 import { SignUpScreen } from "../screens/singUpScreen";
 import { ForgotPasswordScreen } from "../screens/forgotPassScreen";
-import { TouchableOpacity } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { isAuthenticated } from "../utils/authServices";
 
 export type RootStackParamList = {
   Main: undefined;
@@ -18,84 +16,39 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const AppNavigator = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Verifique se o usuário está autenticado
+  useEffect(() => {
+    async function checkAuthentication() {
+      const authenticated = await isAuthenticated();
+      setIsLoggedIn(authenticated);
+    }
+
+    checkAuthentication();
+  }, []);
+
   return (
-    <Stack.Navigator initialRouteName="Main">
+    <Stack.Navigator initialRouteName={isLoggedIn ? "Main" : "Login"}>
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
-        options={({ navigation }) => ({
-          title: "",
-          headerStyle: {
-            backgroundColor: "#F9F9F9",
-            elevation: 0,
-          },
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack();
-              }}
-              style={{ marginLeft: 10 }}
-            >
-              <Ionicons name="chevron-back-outline" size={32} color="black" />
-            </TouchableOpacity>
-          ),
-        })}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={({ navigation }) => ({
-          title: "",
-          headerStyle: {
-            backgroundColor: "#F9F9F9",
-            elevation: 0,
-          },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => {}}></TouchableOpacity>
-          ),
-        })}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Forgot"
         component={ForgotPasswordScreen}
-        options={({ navigation }) => ({
-          title: "",
-          headerStyle: {
-            backgroundColor: "#F9F9F9",
-            elevation: 0,
-          },
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => {
-                navigation.goBack();
-              }}
-              style={{ marginLeft: 10 }}
-            >
-              <Ionicons name="chevron-back-outline" size={32} color="black" />
-            </TouchableOpacity>
-          ),
-        })}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Main"
         component={MainScreen}
-        options={() => ({
-          title: "",
-          headerStyle: {
-            backgroundColor: "#F9F9F9",
-            elevation: 0,
-          },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => {}}>
-              <Ionicons
-                name="menu-outline"
-                size={32}
-                color="black"
-                style={{ marginLeft: 10 }}
-              />
-            </TouchableOpacity>
-          ),
-        })}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

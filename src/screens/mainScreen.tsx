@@ -1,50 +1,68 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button } from "react-native";
-import { GetUserData, ClearAllData } from "../utils/asyncStorage";
-import { auth } from "../services/firebaseconfig";
+import { View, Text, Button, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../routes/navigation";
+import { isAuthenticated, logoutUser } from "../utils/authServices";
+import { GetUserData } from "../utils/asyncStorage";
 
 type MainScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, "Main">;
 };
 
 export const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
-  const [userName, setUserName] = useState<string>("");
+  const [userName, setUserName] = useState<string | null>(null);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const checkAuthentication = () => {
-      const user = auth.currentUser;
-      console.log("checkAuthentication foi chamado.");
-      if (!user) {
-        navigation.navigate("Login");
-        console.log("Usuário não autenticado, redirecionando para Login.");
-      } else {
-        fetchUserName();
-      }
-    };
-
-    const fetchUserName = async () => {
-      console.log("Tentando buscar o nome de usuário...");
-      const name = await GetUserData("user_name");
-      setUserName(name || "Nome de usuário não encontrado");
-    };
-
     checkAuthentication();
-  }, [navigation]);
+  }, [[navigation]]);
+
+  const checkAuthentication = async () => {
+    console.log("Verificando autenticação...");
+
+    const authenticated = await isAuthenticated();
+
+    console.log("Autenticado:", authenticated);
+
+    if (!authenticated) {
+      console.log(
+        "Usuário não autenticado. Redirecionando para a tela de login."
+      );
+      navigation.navigate("Login");
+      return;
+    }
+
+    const name = await GetUserData("user_name");
+    console.log("Nome de usuário recuperado do AsyncStorage:", name);
+    if (name) {
+      setUserName(name);
+    } else {
+      console.log("Nome de usuário não encontrado no AsyncStorage");
+      setUserName("Nome de usuário não encontrado");
+    }
+  };
 
   const handleLogout = async () => {
-    await ClearAllData();
-    await auth.signOut();
-    console.log("Logout realizado. Dados removidos do AsyncStorage.");
-
+    console.log("Realizando logout...");
+    await logoutUser();
+    console.log("Logout concluído.");
     navigation.navigate("Login");
   };
 
+  console.log("Renderizando componente MainScreen. Nome de usuário:", userName);
+
   return (
-    <View>
-      <Text>Welcome, {userName}!</Text>
+    <View style={styles.container}>
+      <Text>Welcome, {userName || "Nome de usuário não encontrado"}!</Text>
       <Button title="Logout" onPress={handleLogout} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

@@ -7,17 +7,17 @@ import { isValidName } from "../../validations/inputsValidations";
 export function NameInput() {
   const { user, setUser }: any = useContext(DataContext);
   const [isNameValid, setIsNameValid] = useState(true);
-  const [showLabel, setShowLabel] = useState(false);
+
+  // Verifica se o campo de nome não está vazio para mostrar o rótulo
+  const showLabel = user.name.trim() !== "";
 
   const handleInputName = (value: string) => {
     setUser({ ...user, name: value });
     setIsNameValid(isValidName(value));
+  };
 
-    if (value.trim() !== "") {
-      setShowLabel(true);
-    } else {
-      setShowLabel(false);
-    }
+  const handleBlur = () => {
+    setIsNameValid(isValidName(user.name));
   };
 
   return (
@@ -28,10 +28,14 @@ export function NameInput() {
           placeholder="Name"
           value={user.name}
           onChangeText={handleInputName}
-          style={[globalstyle.input, !isNameValid && globalstyle.invalidInput]}
+          onBlur={handleBlur}
+          style={[
+            globalstyle.input,
+            !isNameValid && showLabel && globalstyle.invalidInput,
+          ]}
         />
       </View>
-      {!isNameValid && (
+      {!isNameValid && showLabel && (
         <Text style={globalstyle.errorText}>
           Invalid name! Your name must contain more than 4 characters
         </Text>
