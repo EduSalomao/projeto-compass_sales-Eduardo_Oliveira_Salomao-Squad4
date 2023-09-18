@@ -1,11 +1,28 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwtDecode from "jwt-decode";
+
+interface DecodedToken {
+  sub: string;
+  exp: number;
+}
 
 export async function isAuthenticated() {
   try {
     const authToken = await AsyncStorage.getItem("sessionKey");
-    return !!authToken;
+
+    if (!authToken) {
+      return false;
+    }
+
+    const decodedToken = jwtDecode(authToken) as DecodedToken;
+    const currentTime = Date.now() / 1000;
+
+    if (decodedToken.exp && decodedToken.exp < currentTime) {
+      return false;
+    }
+
+    return true;
   } catch (error) {
-    console.error("Erro ao verificar autenticação:", error);
     return false;
   }
 }
@@ -13,7 +30,5 @@ export async function isAuthenticated() {
 export async function logoutUser() {
   try {
     await AsyncStorage.removeItem("sessionKey");
-  } catch (error) {
-    console.error("Erro ao fazer logout:", error);
-  }
+  } catch (error) {}
 }

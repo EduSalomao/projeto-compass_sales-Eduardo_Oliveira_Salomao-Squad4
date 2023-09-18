@@ -14,7 +14,6 @@ async function Authenticate(mode: any, email: string, password: string) {
       password: password,
       returnSecureToken: true,
     });
-    console.log(response.data);
     return {
       userId: response.data.localId,
       sessionKey: response.data.idToken,
@@ -22,7 +21,15 @@ async function Authenticate(mode: any, email: string, password: string) {
   } catch (error) {}
 }
 
-async function SendRecoveryEmail(email: any) {
+export async function SendRecoveryEmail(email: any) {
+  const emailExists = await isEmailInUse(email);
+
+  if (!emailExists) {
+    throw new Error(
+      "Este email não está cadastrado. Verifique o email digitado."
+    );
+  }
+
   const url = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${API_KEY}`;
 
   const response = await axios.post(url, {
@@ -30,7 +37,40 @@ async function SendRecoveryEmail(email: any) {
     email: email,
   });
   const userId = response.data.localId;
-  console.log(response.data);
+}
+
+async function isEmailInUse(email: string): Promise<boolean> {
+  const db = getDatabase(app);
+  const usersRef = ref(db, "users");
+  const snapshot = await get(usersRef);
+
+  if (snapshot.exists()) {
+    const users = snapshot.val();
+    for (const userId in users) {
+      if (users[userId].user_email === email) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+async function isNameInUse(name: string): Promise<boolean> {
+  const db = getDatabase(app);
+  const usersRef = ref(db, "users");
+  const snapshot = await get(usersRef);
+
+  if (snapshot.exists()) {
+    const users = snapshot.val();
+    for (const userId in users) {
+      if (users[userId].user_name === name) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 export async function CreateUser(
@@ -38,6 +78,17 @@ export async function CreateUser(
   password: string,
   name: string
 ) {
+  const emailInUse = await isEmailInUse(email);
+  const nameInUse = await isNameInUse(name);
+
+  if (emailInUse) {
+    throw new Error("This email is already in use. Choose another email.");
+  }
+
+  if (nameInUse) {
+    throw new Error("This username is already in use. Choose another name.");
+  }
+
   const authResponse = await Authenticate("signUp", email, password);
 
   if (authResponse) {
@@ -74,15 +125,26 @@ export async function Login(email: any, password: any) {
       if (userSnapshot.exists()) {
         await SaveData("sessionKey", sessionKey);
         await SaveData("userData", userSnapshot.val());
-      } else {
-        console.log("Usuário não encontrado no Realtime Database");
       }
-    } catch (error) {
-      console.error("Erro ao buscar informações do usuário:", error);
-    }
+    } catch (error) {}
+  } else {
   }
 }
 
 export async function RecoveryPassword(email: any) {
-  await SendRecoveryEmail(email);
+  const emailExists = await isEmailInUse(email);
+
+  if (!emailExists) {
+    return false;
+  }
+
+  const url = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${API_KEY}`;
+
+  const response = await axios.post(url, {
+    requestType: "PASSWORD_RESET",
+    email: email,
+  });
+  const userId = response.data.localId;
+
+  return true;
 }
