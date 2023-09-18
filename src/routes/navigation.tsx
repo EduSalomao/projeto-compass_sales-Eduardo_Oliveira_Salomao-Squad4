@@ -39,7 +39,7 @@ export const AppNavigator = () => {
   }
 
   return (
-    <Stack.Navigator initialRouteName={isLoggedIn ? "Main" : "Login"}>
+    <Stack.Navigator initialRouteName={isLoggedIn ? "Main" : "SignUp"}>
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
