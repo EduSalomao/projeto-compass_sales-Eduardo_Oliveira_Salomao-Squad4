@@ -27,12 +27,10 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
         await CreateUser(user.email, user.password, user.name);
         navigation.navigate("Main");
       } catch (error: any) {
-        // Em caso de erro, defina a mensagem de erro e exiba o erro
         setErrorMessage(error.message);
         setShowError(true);
       }
     } else {
-      // Em caso de erro de validação, defina a mensagem de erro e exiba o erro
       setErrorMessage("Invalid data. Fill in all fields correctly.");
       setShowError(true);
     }

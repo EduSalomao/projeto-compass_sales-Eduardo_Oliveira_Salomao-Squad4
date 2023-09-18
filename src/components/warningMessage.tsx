@@ -13,14 +13,13 @@ interface ErrorMessageProps {
 }
 
 const ErrorMessage: FC<ErrorMessageProps> = ({ message, onClose }) => {
-  // Usando useEffect para disparar o onClose após 3 segundos
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
     }, 3000);
 
     return () => {
-      clearTimeout(timer); // Limpa o timer se o componente for desmontado antes dos 3 segundos
+      clearTimeout(timer);
     };
   }, [onClose]);
 

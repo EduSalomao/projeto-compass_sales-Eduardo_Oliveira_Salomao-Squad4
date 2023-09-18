@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export function isLogged() {
   const [isLogged, setIsLogged] = useState(false);
