@@ -25,7 +25,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
     if (isInputsValidation("singup", user)) {
       try {
         await CreateUser(user.email, user.password, user.name);
-        navigation.navigate("Main");
+        navigation.navigate("Login");
       } catch (error: any) {
         setErrorMessage(error.message);
         setShowError(true);
@@ -42,7 +42,6 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
       <View style={globalstyle.inputContainer}>
         <RegisterContent />
       </View>
-      {/* Renderize o componente de erro se showError for verdadeiro */}
       {showError && (
         <ErrorMessage
           message={errorMessage}
