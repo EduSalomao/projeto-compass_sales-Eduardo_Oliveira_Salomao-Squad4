@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MainScreen } from "../screens/mainScreen";
 import { LoginScreen } from "../screens/loginScreen";
-import { SignUpScreen } from "../screens/singUpScreen";
+import { SignUpScreen } from "../screens/signUpScreen";
 import { ForgotPasswordScreen } from "../screens/forgotPassScreen";
 import { isAuthenticated } from "../utils/authServices";
 import { SplashScreen } from "../screens/splashScreen";

@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { View, Text } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../routes/navigation";
 import { globalstyle } from "../../assets/styles/globalstyles";
@@ -9,6 +9,7 @@ import { RegisterContent } from "../auth/resgisterContent";
 import { DataContext } from "../contexts/inputsData";
 import { CreateUser } from "../utils/auth";
 import { isInputsValidation } from "../validations/inputsValidations";
+import ErrorMessage from "../components/warningMessage";
 
 type SignUpScreenProps = {
   navigation: StackNavigationProp<RootStackParamList, "SignUp">;
@@ -17,16 +18,23 @@ type SignUpScreenProps = {
 export const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
   const { user } = useContext(DataContext);
 
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   async function singUpHandler() {
     if (isInputsValidation("singup", user)) {
       try {
         await CreateUser(user.email, user.password, user.name);
         navigation.navigate("Main");
-      } catch (error) {
-        console.error("Erro ao criar usuário:", error);
+      } catch (error: any) {
+        // Em caso de erro, defina a mensagem de erro e exiba o erro
+        setErrorMessage(error.message);
+        setShowError(true);
       }
     } else {
-      console.log("Erro de validação");
+      // Em caso de erro de validação, defina a mensagem de erro e exiba o erro
+      setErrorMessage("Invalid data. Fill in all fields correctly.");
+      setShowError(true);
     }
   }
 
@@ -36,6 +44,13 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
       <View style={globalstyle.inputContainer}>
         <RegisterContent />
       </View>
+      {/* Renderize o componente de erro se showError for verdadeiro */}
+      {showError && (
+        <ErrorMessage
+          message={errorMessage}
+          onClose={() => setShowError(false)}
+        />
+      )}
       <NavigateButton
         navigation={navigation}
         text="Already have an account?"
@@ -47,3 +62,5 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
     </View>
   );
 };
+
+export default SignUpScreen;
