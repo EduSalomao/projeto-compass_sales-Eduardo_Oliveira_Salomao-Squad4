@@ -72,7 +72,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Ensure that the container takes up the entire screen height
+    flex: 1,
   },
   navigateView: {
     alignItems: "center",

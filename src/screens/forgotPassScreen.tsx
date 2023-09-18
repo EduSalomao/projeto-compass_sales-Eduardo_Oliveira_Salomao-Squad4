@@ -5,7 +5,6 @@ import { globalstyle } from "../../assets/styles/globalstyles";
 import { InsertButton } from "../components/Buttons/insertButton";
 import { ForgetContent } from "../auth/forgetContent";
 import { RecoveryPassword } from "../utils/auth";
-import { isInputsValidation } from "../validations/inputsValidations";
 import { DataContext } from "../contexts/inputsData";
 import ErrorMessage from "../components/warningMessage";
 
@@ -15,7 +14,6 @@ export const ForgotPasswordScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   async function recoveryHandler() {
-    console.log(user.email);
     const emailExists = await RecoveryPassword(user.email);
 
     if (emailExists) {

@@ -4,7 +4,6 @@ import { StatusBar } from "expo-status-bar";
 import { DataProvider } from "./src/contexts/inputsData";
 import FontLoader from "./src/utils/fontLoader";
 import { AppNavigator } from "./src/routes/navigation";
-import { app } from "./src/services/firebaseconfig"; // Seu arquivo de configuração Firebase
 
 export default function App() {
   return (
